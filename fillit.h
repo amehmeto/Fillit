@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:52:12 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/01/19 06:01:51 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/01/21 08:10:21 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@
 #include <stdio.h>
 
 int		fillit_is_sample_valid(char *path);
+void	fillit_tetri_remodel(char *s);
 
 #endif
