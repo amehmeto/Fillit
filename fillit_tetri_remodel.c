@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 07:31:05 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/01/21 12:24:21 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/01/21 13:17:57 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,12 @@ static int		col_empty(const char *s)
 	return (1);
 }
 
-void	fillit_tetri_remodel(char *s)
+static void		col_mover(char *s)
 {
-	char	temp[5];
 	char	temp2[20];
-	int		i, j;
+	int		i;
+	int		j;
 
-
-	while (line_empty(s))
-	{
-		ft_memcpy(temp, s, 5);
-		ft_memcpy(&s[0], &s[5], 15);
-		ft_memcpy(&s[15], temp, 5);
-	}
 	while (col_empty(s))
 	{
 		j = 0;
@@ -81,4 +74,17 @@ void	fillit_tetri_remodel(char *s)
 			j++;
 		}
 	}
+}
+
+void			fillit_tetri_remodel(char *s)
+{
+	char	temp[5];
+
+	while (line_empty(s))
+	{
+		ft_memcpy(temp, s, 5);
+		ft_memcpy(&s[0], &s[5], 15);
+		ft_memcpy(&s[15], temp, 5);
+	}
+	col_mover(s);
 }

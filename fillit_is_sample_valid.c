@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:32:44 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/01/21 08:43:08 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/01/21 12:33:43 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int					fillit_is_sample_valid(char *path)
 			}
 		}
 		/* Everything OK, then print it */
+//		fillit_tetri_linksnbr(buffer);
 		fillit_tetri_remodel(buffer);
 		ft_putstr(buffer);
 	}
@@ -129,6 +130,7 @@ int					fillit_is_sample_valid(char *path)
 					return (50 + n);
 			}
 		}
+//		fillit_tetri_linksnbr(buffer);
 		fillit_tetri_remodel(buffer);
 		ft_putstr(buffer);
 	}
