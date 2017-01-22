@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:32:44 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/01/21 12:33:43 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/01/22 03:45:25 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 #define BUFF_SIZE 21
 
-/* ************************************************************************** */
+/*
+** *****************************************************************************
+*/
 
 static size_t		ft_strlen_mod(const char *s)
 {
@@ -54,7 +56,9 @@ static int			ft_only_sharps_and_points(char *s)
 	return (0);
 }
 
-/* ************************************************************************** */
+/*
+** *****************************************************************************
+*/
 
 int					fillit_is_sample_valid(char *path)
 {
@@ -68,18 +72,25 @@ int					fillit_is_sample_valid(char *path)
 	fd = open(path, O_RDWR);
 	if (fd == -1)
 		ft_putstr("open error\n");
-	/* Check if stricly begins with description,
-	** seperated by one line, while BUFF_LEN = 21
-	** + others tests */
+/*
+** while BUFF_LEN = 21
+*/
 	while ((ret = read(fd, buffer, BUFF_SIZE)) == 21)
 	{
 		buffer[ret] = '\0';
-		/* Only . or # in description */
+/*
+** Only . or # in description
+*/
 		if ((a = ft_only_sharps_and_points(buffer)))
 			return (10);
-		/* Not more than 4 sharps in description */
+/*
+** Not more than 4 sharps in description
+*/
 		if (ft_sharp_counter(buffer) != 4)
 			return (20);
+/*
+** Check if stricly begins with description, seperated by one line.
+*/
 		i = 0;
 		if (ft_strlen(&buffer[i]) == 21)
 		{
@@ -102,35 +113,46 @@ int					fillit_is_sample_valid(char *path)
 				i++;
 			}
 		}
-		/* Everything OK, then print it */
-//		fillit_tetri_linksnbr(buffer);
+/*
+** Everything OK, then remodel and  print it
+*/
 		fillit_tetri_remodel(buffer);
 		ft_putstr(buffer);
 	}
-	/* Check if stricly ends with description (BUFF_LEN = 20)
-	** + others tests */
+/*
+** If BUFF_LEN = 20
+*/
 	if (ret == 20)
 	{
 		buffer[ret] = '\0';
-		/* Only . or # in description */
+/*
+** Only . or # in description
+*/
 		if ((a = ft_only_sharps_and_points(buffer)))
 			return (11);
-		/* Not more than 4 sharps in description */
+/*
+** Not more than 4 sharps in description
+*/
 		if (ft_sharp_counter(buffer) != 4)
 			return (22);
+/*
+** Check if stricly ends with description only
+*/
 		i = 0;
 		if (ft_strlen_mod(&buffer[i]) == 4)
 		{
 			n = 4;
 			while (n--)
 			{
-				if (ft_strlen_mod(&buffer[i]) == 4) 
+				if (ft_strlen_mod(&buffer[i]) == 4)
 					i += 5;
 				else
 					return (50 + n);
 			}
 		}
-//		fillit_tetri_linksnbr(buffer);
+/*
+** Everything OK, then remodel and  print it
+*/
 		fillit_tetri_remodel(buffer);
 		ft_putstr(buffer);
 	}

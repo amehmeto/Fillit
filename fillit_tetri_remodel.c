@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 07:31:05 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/01/21 13:17:57 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/01/22 03:21:41 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,27 +50,18 @@ static void		col_mover(char *s)
 
 	while (col_empty(s))
 	{
-		j = 0;
-		while (j < 3)
+		j = -5;
+		while (j + 5 < 3)
 		{
 			i = j;
-			while (i < 20)
-			{
+			while ((i += 5) < 20)
 				ft_memcpy(&temp2[i], &s[i], 1);
-				i += 5;
-			}
 			i = j;
-			while (i < 20)
-			{
+			while ((i += 5) < 20)
 				ft_memcpy(&s[i], &s[i + 1], 1);
-				i += 5;
-			}
 			i = j;
-			while (i < 20)
-			{
+			while ((i += 5) < 20)
 				ft_memcpy(&s[i + 1], &temp2[i], 1);
-				i += 5;
-			}
 			j++;
 		}
 	}
