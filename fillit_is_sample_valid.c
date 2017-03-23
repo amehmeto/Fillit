@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:32:44 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/01/22 03:45:25 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/23 11:07:51 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,15 @@ static int			ft_only_sharps_and_points(char *s)
 ** *****************************************************************************
 */
 
+int				ft_error(char *str)
+{
+	write (2, str, ft_strlen(str));
+	return (-1);
+}
+
+if (x < 8)
+	return (ft_error("x inferieur a 8"));
+
 int					fillit_is_sample_valid(char *path)
 {
 	int		fd;
@@ -92,7 +101,7 @@ int					fillit_is_sample_valid(char *path)
 ** Check if stricly begins with description, seperated by one line.
 */
 		i = 0;
-		if (ft_strlen(&buffer[i]) == 21)
+		if (ret == 21)
 		{
 			while (buffer[i])
 			{
@@ -114,7 +123,7 @@ int					fillit_is_sample_valid(char *path)
 			}
 		}
 /*
-** Everything OK, then remodel and  print it
+** Everything OK, then remodel and print it
 */
 		fillit_tetri_remodel(buffer);
 		ft_putstr(buffer);
