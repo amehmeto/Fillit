@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:32:44 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/23 11:07:51 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/24 18:11:10 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static size_t		ft_sharp_counter(const char *s)
 	return (c);
 }
 
-static int			ft_only_sharps_and_points(char *s)
+static int			ft_only_sharps_and_dots(char *s)
 {
 	int		i;
 
@@ -66,21 +66,17 @@ int				ft_error(char *str)
 	return (-1);
 }
 
-if (x < 8)
+/*if (x < 8)
 	return (ft_error("x inferieur a 8"));
-
-int					fillit_is_sample_valid(char *path)
+*/
+int					fillit_is_sample_valid(int fd)
 {
-	int		fd;
 	int		ret;
 	char	buffer[BUFF_SIZE + 1];
 	int		i;
 	int		n;
 	int		a;
 
-	fd = open(path, O_RDWR);
-	if (fd == -1)
-		ft_putstr("open error\n");
 /*
 ** while BUFF_LEN = 21
 */
@@ -90,7 +86,7 @@ int					fillit_is_sample_valid(char *path)
 /*
 ** Only . or # in description
 */
-		if ((a = ft_only_sharps_and_points(buffer)))
+		if ((a = ft_only_sharps_and_dots(buffer)))
 			return (10);
 /*
 ** Not more than 4 sharps in description
@@ -125,8 +121,8 @@ int					fillit_is_sample_valid(char *path)
 /*
 ** Everything OK, then remodel and print it
 */
-		fillit_tetri_remodel(buffer);
-		ft_putstr(buffer);
+/*		fillit_tetri_remodel(buffer);
+		ft_putstr(buffer);*/
 	}
 /*
 ** If BUFF_LEN = 20
@@ -137,7 +133,7 @@ int					fillit_is_sample_valid(char *path)
 /*
 ** Only . or # in description
 */
-		if ((a = ft_only_sharps_and_points(buffer)))
+		if ((a = ft_only_sharps_and_dots(buffer)))
 			return (11);
 /*
 ** Not more than 4 sharps in description
@@ -162,8 +158,8 @@ int					fillit_is_sample_valid(char *path)
 /*
 ** Everything OK, then remodel and  print it
 */
-		fillit_tetri_remodel(buffer);
-		ft_putstr(buffer);
+	/*	fillit_tetri_remodel(buffer);
+		ft_putstr(buffer);*/
 	}
 	else
 		return (60);
