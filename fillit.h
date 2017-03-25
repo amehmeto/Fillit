@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:52:12 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/24 19:04:49 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/25 21:36:37 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-int				fillit_is_sample_valid(int fd);
-void			fillit_tetri_remodel(char *s);
-struct tetri	*fillit_encoder(int fd, struct tetri *tetri);
-
-struct	tetri
+struct mask	
 {
 	unsigned long long	first_quartr;
 	unsigned long long	secnd_quartr;
 	unsigned long long	third_quartr;
 	unsigned long long	forth_quartr;
 };
+
+int				fillit_is_sample_valid(int fd);
+void			fillit_tetri_remodel(char *s);
+void			fillit_encoder(int fd, struct mask *tetri);
 
 #endif

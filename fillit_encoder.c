@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 14:45:52 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/25 20:51:24 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/25 21:36:59 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * **************************************************************************
 */
 
-void					struct_init(struct tetri *tetri, int j)
+void					struct_init(struct mask *tetri, int j)
 {
 	tetri[j].first_quartr = 0;
 	tetri[j].secnd_quartr = 0;
@@ -27,7 +27,7 @@ void					struct_init(struct tetri *tetri, int j)
 	tetri[j].forth_quartr = 0;
 }
 
-struct tetri			*fillit_encoder(int fd, struct tetri *tetri)
+void					fillit_encoder(int fd, struct mask *tetri)
 {
 	char				buffer[BUFF_SIZE + 1];
 	unsigned long long	marker;
@@ -53,5 +53,4 @@ struct tetri			*fillit_encoder(int fd, struct tetri *tetri)
 		}
 	}
 	tetri[++j].first_quartr = 0;
-	return (tetri);
 }
