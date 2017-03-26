@@ -6,19 +6,19 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 21:56:01 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/26 22:13:32 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/26 22:53:56 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Libft/libft.h"
 #include "fillit.h"
 
-int		main(int ac, char **av)
+int					main(int ac, char **av)
 {
-	struct	mask tetri[26];
-	int		a;
-	int		fd;
-	int		i;
+	struct mask		tetri[26];
+	int				a;
+	int				fd;
+	int				i;
 
 	if (ac != 2)
 	{
@@ -29,18 +29,15 @@ int		main(int ac, char **av)
 		ft_putstr("open error\n");
 	if ((a = fillit_is_sample_valid(fd)))
 	{
-//		ft_putstr("sample is not valid\n");
 		printf("sample is not valid (%d)\n", a);
 		return (0);
 	}
 	if ((fd = open(av[1], O_RDWR)) == -1)
 		ft_putstr("open error\n");
-
 	fillit_encoder(fd, tetri);
 	i = -1;
-//	while (tetri[++i].first_quartr)
-//		printf("Tetri n* %d = %llu\n", i, tetri[i].first_quartr);
+	while (tetri[++i].first_quartr)
+		printf("Tetri n* %d = %llu\n", i, tetri[i].first_quartr);
 	fillit_resolver(tetri);
-
 	return (0);
 }

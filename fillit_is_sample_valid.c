@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:32:44 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/24 18:11:10 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/26 22:56:15 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #define BUFF_SIZE 21
 
 /*
-** *****************************************************************************
+** ************************************************************************** **
 */
 
 static size_t		ft_strlen_mod(const char *s)
@@ -57,19 +57,10 @@ static int			ft_only_sharps_and_dots(char *s)
 }
 
 /*
-** *****************************************************************************
+** ************************************************************************** **
 */
 
-int				ft_error(char *str)
-{
-	write (2, str, ft_strlen(str));
-	return (-1);
-}
-
-/*if (x < 8)
-	return (ft_error("x inferieur a 8"));
-*/
-int					fillit_is_sample_valid(int fd)
+int			fillit_is_sample_valid(int fd)
 {
 	int		ret;
 	char	buffer[BUFF_SIZE + 1];
@@ -77,27 +68,18 @@ int					fillit_is_sample_valid(int fd)
 	int		n;
 	int		a;
 
-/*
-** while BUFF_LEN = 21
-*/
-	while ((ret = read(fd, buffer, BUFF_SIZE)) == 21)
+	while ((ret = read(fd, buffer, BUFF_SIZE)) == 21 || ret == 20)
 	{
 		buffer[ret] = '\0';
-/*
-** Only . or # in description
-*/
+// Only . or # in description
 		if ((a = ft_only_sharps_and_dots(buffer)))
 			return (10);
-/*
-** Not more than 4 sharps in description
-*/
+// Not more than 4 sharps in description
 		if (ft_sharp_counter(buffer) != 4)
 			return (20);
-/*
-** Check if stricly begins with description, seperated by one line.
-*/
+// Check if stricly begins with description, seperated by one line
 		i = 0;
-		if (ret == 21)
+		if (ret == 21 || ret == 20)
 		{
 			while (buffer[i])
 			{
@@ -118,51 +100,7 @@ int					fillit_is_sample_valid(int fd)
 				i++;
 			}
 		}
-/*
-** Everything OK, then remodel and print it
-*/
-/*		fillit_tetri_remodel(buffer);
-		ft_putstr(buffer);*/
 	}
-/*
-** If BUFF_LEN = 20
-*/
-	if (ret == 20)
-	{
-		buffer[ret] = '\0';
-/*
-** Only . or # in description
-*/
-		if ((a = ft_only_sharps_and_dots(buffer)))
-			return (11);
-/*
-** Not more than 4 sharps in description
-*/
-		if (ft_sharp_counter(buffer) != 4)
-			return (22);
-/*
-** Check if stricly ends with description only
-*/
-		i = 0;
-		if (ft_strlen_mod(&buffer[i]) == 4)
-		{
-			n = 4;
-			while (n--)
-			{
-				if (ft_strlen_mod(&buffer[i]) == 4)
-					i += 5;
-				else
-					return (50 + n);
-			}
-		}
-/*
-** Everything OK, then remodel and  print it
-*/
-	/*	fillit_tetri_remodel(buffer);
-		ft_putstr(buffer);*/
-	}
-	else
-		return (60);
 	buffer[ret] = '\0';
 	if (close(fd) == -1)
 		ft_putstr("close error\n");

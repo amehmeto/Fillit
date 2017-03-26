@@ -6,20 +6,20 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:52:12 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/26 22:12:53 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/26 22:38:25 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLIT_H
 # define FILLIT_H
 
-#include "Libft/libft.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <stdio.h>
+# include "Libft/libft.h"
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <stdio.h>
 
-struct mask	
+struct	mask
 {
 	unsigned long long	first_quartr;
 	unsigned long long	secnd_quartr;
@@ -27,8 +27,8 @@ struct mask
 	unsigned long long	forth_quartr;
 };
 
-int				fillit_is_sample_valid(int fd);
-void			fillit_encoder(int fd, struct mask *tetri);
-void			fillit_resolver(struct mask *tetri);
+int		fillit_is_sample_valid(int fd);
+void	fillit_encoder(int fd, struct mask *tetri);
+void	fillit_resolver(struct mask *tetri);
 
 #endif
