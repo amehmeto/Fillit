@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:52:12 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/25 21:48:58 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/25 23:54:10 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ struct mask
 
 int				fillit_is_sample_valid(int fd);
 void			fillit_encoder(int fd, struct mask *tetri);
+void			fillit_resolver(struct mask *tetri);
 
 #endif
