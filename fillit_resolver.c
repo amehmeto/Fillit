@@ -6,16 +6,16 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/25 21:26:50 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/26 22:24:17 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/26 22:29:10 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-static void		grid_init(struct mask *square, int size)
+static void				grid_init(struct mask *square, int size)
 {
-	unsigned long long  *quartr_to_fill;
-	unsigned long long 	marker;
+	unsigned long long	*quartr_to_fill;
+	unsigned long long	marker;
 	int					size_cpy;
 	int					i;
 
@@ -23,7 +23,6 @@ static void		grid_init(struct mask *square, int size)
 	i = -1;
 	while (++i <= size)
 	{
-		marker = 0x8000000000000000;
 		if (i <= 4)
 			quartr_to_fill = &square->first_quartr;
 		if (i > 4 && i <= 8)
@@ -33,6 +32,7 @@ static void		grid_init(struct mask *square, int size)
 		if (i > 12 && i <= 16)
 			quartr_to_fill = &square->third_quartr;
 		*quartr_to_fill = *quartr_to_fill >> 16;
+		marker = 0x8000000000000000;
 		size_cpy = size;
 		while (size_cpy--)
 		{
@@ -46,15 +46,15 @@ static void		grid_init(struct mask *square, int size)
 	square->forth_quartr = ~square->forth_quartr;
 }
 
-void			fillit_resolver(struct mask *tetri)
+void					fillit_resolver(struct mask *tetri)
 {
-	struct mask		square;
-	int				size;
+	struct mask			square;
+	int					size;
 
 	square.first_quartr = 0;
 	square.secnd_quartr = 0;
 	square.third_quartr = 0;
-	square.forth_quartr	= 0;
+	square.forth_quartr = 0;
 	(void)tetri;
 	size = 10;
 	grid_init(&square, size);
