@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 02:37:48 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/27 21:23:52 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/27 22:54:51 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,29 @@ int		fillit_displayer(struct mask *tetri, int size)
 				if (tetri[j].first_quartr & printer)
 					r[i] = 'A' + j;
 				if (ft_isalpha(r[i]))
-					ft_putstr("\033[32m");
+					ft_putstr(ft_strjoin("\033[", ft_strjoin(ft_itoa(30 + (j % 7)), "m")));
 				else
-					ft_putstr("\033[31m");
+					ft_putstr("\033[0m");
 				printer = printer >> 1;
 				ft_putchar(r[i]);
 			}
 			else
 			{
-				ft_putstr("\033[31m");
+				ft_putstr("\033[0m");
 				ft_putchar(r[i]);
 				printer = printer >> (16 - size);
 			}
 		}
 	}
-	ft_putstr("\033[0m");
 	printf("\nResultat final :\n");
-	ft_putstr(r);
+	i = -1;
+	while (r[++i])
+	{
+		if (ft_isalpha(r[i]))
+			ft_putstr(ft_strjoin("\033[", ft_strjoin(ft_itoa(30 + (r[i] % 7)), "m")));
+		ft_putchar(r[i]);
+		ft_putstr("\033[0m");
+	}
+	ft_putstr("\033[0m");
 	return (0);
 }
