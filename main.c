@@ -6,11 +6,10 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 21:56:01 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/26 22:53:56 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/27 04:58:09 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Libft/libft.h"
 #include "fillit.h"
 
 int					main(int ac, char **av)
@@ -39,5 +38,7 @@ int					main(int ac, char **av)
 	while (tetri[++i].first_quartr)
 		printf("Tetri n* %d = %llu\n", i, tetri[i].first_quartr);
 	fillit_resolver(tetri);
+	if (fillit_displayer(tetri, 4))
+		ft_putstr("ca marche pas\n");
 	return (0);
 }
