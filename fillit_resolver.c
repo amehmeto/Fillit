@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/25 21:26:50 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/27 05:18:52 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/27 20:51:27 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void				grid_init(struct mask *square, int size)
 	square->forth_quartr = ~square->forth_quartr;
 }
 
-static int				square_vs_tetri(struct mask *square, struct mask *tetri)
+/*static int				square_vs_tetri(struct mask *square, struct mask *tetri)
 {
 	int		i;
 
@@ -63,13 +63,14 @@ static int				square_vs_tetri(struct mask *square, struct mask *tetri)
 		printf("SQUARE %d  = %llu\n", i, square->first_quartr);
 	}
 	return (0);
-}
+}*/
 
 void					fillit_resolver(struct mask *tetri)
 {
 	struct mask			square;
 	int					size;
 
+	(void)tetri;
 	square.first_quartr = 0;
 	square.secnd_quartr = 0;
 	square.third_quartr = 0;
@@ -80,7 +81,7 @@ void					fillit_resolver(struct mask *tetri)
 	printf("2nd quartr = %llu\n", square.secnd_quartr);
 	printf("3rd quartr = %llu\n", square.third_quartr);
 	printf("4th quartr = %llu\n\n", square.forth_quartr);
-	while (square_vs_tetri(&square, tetri) && size < 16)
+/*	while (square_vs_tetri(&square, tetri) && size < 16)
 	{
 		printf("\nsize = %d\n", size);
 		square.first_quartr = 0;
@@ -88,5 +89,5 @@ void					fillit_resolver(struct mask *tetri)
 		square.third_quartr = 0;
 		square.forth_quartr = 0;
 		grid_init(&square, ++size);
-	}
+	}*/
 }

@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 21:56:01 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/27 04:58:09 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/27 20:49:41 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int					main(int ac, char **av)
 		ft_putstr("open error\n");
 	fillit_encoder(fd, tetri);
 	i = -1;
-	while (tetri[++i].first_quartr)
-		printf("Tetri n* %d = %llu\n", i, tetri[i].first_quartr);
+//	while (tetri[++i].first_quartr)
+//		printf("Tetri n* %d = %llu\n", i, tetri[i].first_quartr);
 	fillit_resolver(tetri);
 	if (fillit_displayer(tetri, 4))
 		ft_putstr("ca marche pas\n");
