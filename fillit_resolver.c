@@ -6,11 +6,25 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/25 21:26:50 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/27 20:51:27 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/28 01:56:52 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+/*
+ * **************************************************************************
+*/
+
+static void		delete_excess(struct mask *tetri, int i)
+{
+	while (tetri[++i].first_quartr)
+		tetri[i].first_quartr = 0;
+}
+
+/*
+ * **************************************************************************
+*/
 
 void				grid_init(struct mask *square, int size)
 {
@@ -46,29 +60,30 @@ void				grid_init(struct mask *square, int size)
 	square->forth_quartr = ~square->forth_quartr;
 }
 
-/*static int				square_vs_tetri(struct mask *square, struct mask *tetri)
+static int				square_vs_tetri(struct mask *square, struct mask *tetri)
 {
 	int		i;
 
 	i = -1;
 	while (++i <= 26)
 	{
-		while ((tetri[i].first_quartr & square->first_quartr)
-				&& !(tetri[i].first_quartr & 1))
+		while ((tetri[i].first_quartr & square->first_quartr) && !(tetri[i].first_quartr & 1))
 			tetri[i].first_quartr = tetri[i].first_quartr >> 1;
 		if (!(tetri[i].first_quartr & square->first_quartr))
 			square->first_quartr = square->first_quartr ^ tetri[i].first_quartr;
 		else
-			return (i + 1);
-		printf("SQUARE %d  = %llu\n", i, square->first_quartr);
+			return (i);
+		printf("\nSquare %d\n", i);
+		fillit_displayer(tetri, 14);
 	}
 	return (0);
-}*/
+}
 
 void					fillit_resolver(struct mask *tetri)
 {
 	struct mask			square;
 	int					size;
+	int					i;
 
 	(void)tetri;
 	square.first_quartr = 0;
@@ -81,6 +96,11 @@ void					fillit_resolver(struct mask *tetri)
 	printf("2nd quartr = %llu\n", square.secnd_quartr);
 	printf("3rd quartr = %llu\n", square.third_quartr);
 	printf("4th quartr = %llu\n\n", square.forth_quartr);
+	i =	square_vs_tetri(&square, tetri);
+	delete_excess(tetri, i);
+	printf("\nResultat final\n");
+	fillit_displayer(tetri, size);
+
 /*	while (square_vs_tetri(&square, tetri) && size < 16)
 	{
 		printf("\nsize = %d\n", size);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit_displayer.c                                 :+:      :+:    :+:   */
+/*   fillit_displayer_with_color.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/27 02:37:48 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/27 22:58:02 by amehmeto         ###   ########.fr       */
+/*   Created: 2017/03/27 23:35:33 by amehmeto          #+#    #+#             */
+/*   Updated: 2017/03/28 00:37:56 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,11 @@
 int		fillit_displayer(struct mask *tetri, int size)
 {
 	unsigned long long		printer;
-	struct mask				grid;
 	int						i;
 	int						j;
 	int						k;
 	char					*r;
 
-	(void)tetri;
-	grid.first_quartr = 0;
-	grid.secnd_quartr = 0;
-	grid.third_quartr = 0;
-	grid.forth_quartr = 0;
 	if (!(r = (char*)malloc(sizeof(char) * 256)))
 		return (1);
 	i = 0;
@@ -43,8 +37,8 @@ int		fillit_displayer(struct mask *tetri, int size)
 	j = -1;
 	while (tetri[++j].first_quartr)
 	{
-		i = -1;
 		printer = 0x8000000000000000;
+		i = -1;
 		while (r[++i])
 		{
 			if (r[i] != '\n')
@@ -57,7 +51,6 @@ int		fillit_displayer(struct mask *tetri, int size)
 				printer = printer >> (16 - size);
 		}
 	}
-	printf("\nResultat final :\n");
 	i = -1;
 	while (r[++i])
 	{

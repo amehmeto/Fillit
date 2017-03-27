@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit_displayer.c                                 :+:      :+:    :+:   */
+/*   fillit_displayer_no_color.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/27 02:37:48 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/27 21:28:33 by amehmeto         ###   ########.fr       */
+/*   Created: 2017/03/27 23:38:16 by amehmeto          #+#    #+#             */
+/*   Updated: 2017/03/27 23:38:21 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int		fillit_displayer(struct mask *tetri, int size)
 	int						k;
 	char					*r;
 
-	(void)tetri;
 	grid.first_quartr = 0;
 	grid.secnd_quartr = 0;
 	grid.third_quartr = 0;
