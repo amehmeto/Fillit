@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 02:37:48 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/27 22:54:51 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/27 22:58:02 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int		fillit_displayer(struct mask *tetri, int size)
 	j = -1;
 	while (tetri[++j].first_quartr)
 	{
-		ft_putstr("\033[0m");
-		printf("Impression du tetri %c\n", 'A' + j);
 		i = -1;
 		printer = 0x8000000000000000;
 		while (r[++i])
@@ -53,19 +51,10 @@ int		fillit_displayer(struct mask *tetri, int size)
 			{
 				if (tetri[j].first_quartr & printer)
 					r[i] = 'A' + j;
-				if (ft_isalpha(r[i]))
-					ft_putstr(ft_strjoin("\033[", ft_strjoin(ft_itoa(30 + (j % 7)), "m")));
-				else
-					ft_putstr("\033[0m");
 				printer = printer >> 1;
-				ft_putchar(r[i]);
 			}
 			else
-			{
-				ft_putstr("\033[0m");
-				ft_putchar(r[i]);
 				printer = printer >> (16 - size);
-			}
 		}
 	}
 	printf("\nResultat final :\n");
