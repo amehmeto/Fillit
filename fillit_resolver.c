@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/25 21:26:50 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/28 05:29:01 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/28 05:52:42 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void		fillit_resolver(struct mask *tetri)
 	int					size;
 	int					i;
 
-	(void)tetri;
 	square.first_quartr = 0;
 	square.secnd_quartr = 0;
 	square.third_quartr = 0;
@@ -97,13 +96,16 @@ void		fillit_resolver(struct mask *tetri)
 	delete_excess(tetri, i);
 	printf("\nResultat final\n");
 	fillit_displayer(tetri, size);
-/*	while (square_vs_tetri(&square, tetri) && size < 16)
-	{
-		printf("\nsize = %d\n", size);
-		square.first_quartr = 0;
-		square.secnd_quartr = 0;
-		square.third_quartr = 0;
-		square.forth_quartr = 0;
-		grid_init(&square, ++size);
-	}*/
+/*
+** while (square_vs_tetri(&square, tetri) && size < 16)
+** {
+** 		printf("\nsize = %d\n", size);
+** 		square.first_quartr = 0;
+** 		square.secnd_quartr = 0;
+** 		square.third_quartr = 0;
+** 		square.forth_quartr = 0;
+** 		grid_init(&square, ++size);
+** 		}
+*/
+	(void)tetri;
 }
