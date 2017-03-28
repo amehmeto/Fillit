@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/25 21:26:50 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/28 05:19:00 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/28 05:29:01 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ static int	square_vs_tetri(struct mask *square, struct mask *tetri, int size)
 	i = -1;
 	while (++i <= 26)
 	{
-		while ((tetri[i].first_quartr & square->first_quartr) && !(tetri[i].first_quartr & 1))
+		while ((tetri[i].first_quartr & square->first_quartr)
+				&& !(tetri[i].first_quartr & 1))
 			tetri[i].first_quartr = tetri[i].first_quartr >> 1;
 		if (!(tetri[i].first_quartr & square->first_quartr))
 			square->first_quartr = square->first_quartr ^ tetri[i].first_quartr;

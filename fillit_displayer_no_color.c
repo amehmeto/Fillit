@@ -6,22 +6,18 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 23:38:16 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/28 05:13:36 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/28 05:34:55 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		fillit_displayer(struct mask *tetri, int size)
+void		points_initializer(int size, char *r)
 {
-	unsigned long long		printer;
-	int						i;
-	int						j;
-	int						k;
-	char					*r;
+	int		i;
+	int		j;
+	int		k;
 
-	if (!(r = (char*)malloc(sizeof(char) * 256)))
-		return (1);
 	i = 0;
 	j = size;
 	while (j--)
@@ -32,6 +28,18 @@ int		fillit_displayer(struct mask *tetri, int size)
 		r[i++] = '\n';
 	}
 	r[i] = '\0';
+}
+
+int			fillit_displayer(struct mask *tetri, int size)
+{
+	unsigned long long		printer;
+	int						i;
+	int						j;
+	char					*r;
+
+	if (!(r = (char*)malloc(sizeof(char) * 256)))
+		return (1);
+	points_initializer(size, r);
 	j = -1;
 	while (tetri[++j].first_quartr)
 	{
