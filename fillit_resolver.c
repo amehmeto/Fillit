@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/25 21:26:50 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/28 02:32:12 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/28 05:19:00 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@
  * **************************************************************************
 */
 
-static void		delete_excess(struct mask *tetri, int i)
+static void	delete_excess(struct mask *tetri, int i)
 {
-	while (tetri[++i].first_quartr)
-		tetri[i].first_quartr = 0;
+	while (tetri[i++].first_quartr)
+		tetri[i - 1].first_quartr = 0;
 }
 
 /*
  * **************************************************************************
 */
 
-void				grid_init(struct mask *square, int size)
+void		grid_init(struct mask *square, int size)
 {
 	unsigned long long	*quartr_to_fill;
 	unsigned long long	marker;
@@ -60,9 +60,9 @@ void				grid_init(struct mask *square, int size)
 	square->forth_quartr = ~square->forth_quartr;
 }
 
-static int				square_vs_tetri(struct mask *square, struct mask *tetri)
+static int	square_vs_tetri(struct mask *square, struct mask *tetri, int size)
 {
-	int		i;
+	int				i;
 
 	i = -1;
 	while (++i <= 26)
@@ -74,12 +74,12 @@ static int				square_vs_tetri(struct mask *square, struct mask *tetri)
 		else
 			return (i);
 		printf("\nSquare %d\n", i);
-		fillit_displayer(tetri, 14);
+		fillit_displayer(tetri, size);
 	}
 	return (0);
 }
 
-void					fillit_resolver(struct mask *tetri)
+void		fillit_resolver(struct mask *tetri)
 {
 	struct mask			square;
 	int					size;
@@ -90,17 +90,12 @@ void					fillit_resolver(struct mask *tetri)
 	square.secnd_quartr = 0;
 	square.third_quartr = 0;
 	square.forth_quartr = 0;
-	size = 14;
+	size = 4;
 	grid_init(&square, size);
-	printf("1st quartr = %llu\n", square.first_quartr);
-	printf("2nd quartr = %llu\n", square.secnd_quartr);
-	printf("3rd quartr = %llu\n", square.third_quartr);
-	printf("4th quartr = %llu\n\n", square.forth_quartr);
-	i =	square_vs_tetri(&square, tetri);
+	i = square_vs_tetri(&square, tetri, size);
 	delete_excess(tetri, i);
 	printf("\nResultat final\n");
 	fillit_displayer(tetri, size);
-
 /*	while (square_vs_tetri(&square, tetri) && size < 16)
 	{
 		printf("\nsize = %d\n", size);

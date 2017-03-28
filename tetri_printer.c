@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 23:33:09 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/28 01:53:48 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/28 05:11:57 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static int		tetri_displayer(struct mask *tetri, int size)
 
 	if (!(r = (char*)malloc(sizeof(char) * 3 * 256)))
 		return (1);
-
 	j = -1;
 	i = 0;
 	while (tetri[++j].first_quartr)
@@ -50,7 +49,8 @@ static int		tetri_displayer(struct mask *tetri, int size)
 	while (r[++i])
 	{
 		if (ft_isalpha(r[i]))
-			ft_putstr(ft_strjoin("\033[", ft_strjoin(ft_itoa(30 + (r[i] % 7)), "m")));
+			ft_putstr(
+				ft_strjoin("\033[", ft_strjoin(ft_itoa(30 + (r[i] % 7)), "m")));
 		ft_putchar(r[i]);
 		ft_putstr("\033[0m");
 	}
@@ -58,7 +58,7 @@ static int		tetri_displayer(struct mask *tetri, int size)
 	return (0);
 }
 
-int					main(int ac, char **av)
+int				main(int ac, char **av)
 {
 	struct mask		tetri[26];
 	int				a;

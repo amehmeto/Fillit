@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 23:38:16 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/28 02:32:32 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/28 05:13:36 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ int		fillit_displayer(struct mask *tetri, int size)
 		r[i++] = '\n';
 	}
 	r[i] = '\0';
-
-
 	j = -1;
 	while (tetri[++j].first_quartr)
 	{

@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:32:44 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/26 22:56:15 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/28 05:14:46 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int			ft_only_sharps_and_dots(char *s)
 ** ************************************************************************** **
 */
 
-int			fillit_is_sample_valid(int fd)
+int					fillit_is_sample_valid(int fd)
 {
 	int		ret;
 	char	buffer[BUFF_SIZE + 1];
