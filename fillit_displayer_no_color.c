@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 23:38:16 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/28 05:47:06 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/29 03:47:40 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int			fillit_displayer(struct mask *tetri, int size)
 		return (1);
 	points_initializer(size, r);
 	j = -1;
-	while (tetri[++j].first_quartr)
+	while (tetri[++j].a)
 	{
 		i = -1;
 		printer = 0x8000000000000000;
@@ -49,7 +49,7 @@ int			fillit_displayer(struct mask *tetri, int size)
 		{
 			if (r[i] != '\n')
 			{
-				if (tetri[j].first_quartr & printer)
+				if (tetri[j].a & printer)
 					r[i] = 'A' + j;
 				printer = printer >> 1;
 			}

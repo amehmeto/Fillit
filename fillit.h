@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:52:12 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/27 03:19:26 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/29 03:32:50 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 
 struct	mask
 {
-	unsigned long long	first_quartr;
-	unsigned long long	secnd_quartr;
-	unsigned long long	third_quartr;
-	unsigned long long	forth_quartr;
+	unsigned long long	a;
+	unsigned long long	b;
+	unsigned long long	c;
+	unsigned long long	d;
 };
 
 int		fillit_is_sample_valid(int fd);

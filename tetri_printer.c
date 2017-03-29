@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 23:33:09 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/28 05:11:57 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/29 07:27:53 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ static int		tetri_displayer(struct mask *tetri, int size)
 		return (1);
 	j = -1;
 	i = 0;
-	while (tetri[++j].first_quartr)
+	while (tetri[++j].a)
 	{
 		printer = 0x8000000000000000;
 		k = 0;
 		while (++k <= 16)
 		{
-			if (tetri[j].first_quartr & printer)
+			if (tetri[j].a & printer)
 				r[i] = 'A' + j;
 			else
 				r[i] = '.';

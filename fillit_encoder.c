@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 14:45:52 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/25 22:08:59 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/29 03:42:06 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@
 
 static void				struct_init(struct mask *tetri, int j)
 {
-	tetri[j].first_quartr = 0;
-	tetri[j].secnd_quartr = 0;
-	tetri[j].third_quartr = 0;
-	tetri[j].forth_quartr = 0;
+	tetri[j].a = 0;
+	tetri[j].b = 0;
+	tetri[j].c = 0;
+	tetri[j].d = 0;
 }
 
 static void				fillit_tetri_remodel(struct mask *tetri, int j)
 {
-	while (tetri[j].first_quartr < 0x1000000000000)
-		tetri[j].first_quartr = tetri[j].first_quartr << 16;
-	while (!(tetri[j].first_quartr & 0x8000800080008000))
-		tetri[j].first_quartr = tetri[j].first_quartr << 1;
+	while (tetri[j].a < 0x1000000000000)
+		tetri[j].a = tetri[j].a << 16;
+	while (!(tetri[j].a & 0x8000800080008000))
+		tetri[j].a = tetri[j].a << 1;
 }
 
 void					fillit_encoder(int fd, struct mask *tetri)
@@ -53,7 +53,7 @@ void					fillit_encoder(int fd, struct mask *tetri)
 		while (buffer[++i])
 		{
 			if (buffer[i] == '#')
-				tetri[j].first_quartr = tetri[j].first_quartr | marker;
+				tetri[j].a = tetri[j].a | marker;
 			if (buffer[i] != '\n')
 				marker = marker >> 1;
 			else
@@ -61,5 +61,5 @@ void					fillit_encoder(int fd, struct mask *tetri)
 		}
 		fillit_tetri_remodel(tetri, j);
 	}
-	tetri[++j].first_quartr = 0;
+	tetri[++j].a = 0;
 }

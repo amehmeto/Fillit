@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 23:35:33 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/28 05:40:40 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/29 09:51:47 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int			fillit_displayer(struct mask *tetri, int size)
 		return (1);
 	points_initializer(size, r);
 	j = -1;
-	while (tetri[++j].first_quartr)
+	while (tetri[++j].a)
 	{
 		printer = 0x8000000000000000;
 		i = -1;
@@ -49,7 +49,58 @@ int			fillit_displayer(struct mask *tetri, int size)
 		{
 			if (r[i] != '\n')
 			{
-				if (tetri[j].first_quartr & printer)
+				if (tetri[j].a & printer)
+					r[i] = 'A' + j;
+				printer = printer >> 1;
+			}
+			else
+				printer = printer >> (16 - size);
+		}
+	}
+	j = -1;
+	while (tetri[++j].b)
+	{
+		printer = 0x8000000000000000;
+		i = size * 4 + 4 - 1;
+		while (r[++i])
+		{
+			if (r[i] != '\n')
+			{
+				if (tetri[j].a & printer)
+					r[i] = 'A' + j;
+				printer = printer >> 1;
+			}
+			else
+				printer = printer >> (16 - size);
+		}
+	}
+	j = -1;
+	while (tetri[++j].c)
+	{
+		printer = 0x8000000000000000;
+		i = size * 8 + 8 - 1;
+		while (r[++i])
+		{
+			if (r[i] != '\n')
+			{
+				if (tetri[j].a & printer)
+					r[i] = 'A' + j;
+				printer = printer >> 1;
+			}
+			else
+				printer = printer >> (16 - size);
+		}
+	}
+	j = -1;
+	while (tetri[++j].d)
+	{
+		printer = 0x8000000000000000;
+		i = size * 12 + 12 - 1;
+		while (r[++i])
+		{
+			if (r[i] != '\n')
+			{
+				if (tetri[j].a & printer)
 					r[i] = 'A' + j;
 				printer = printer >> 1;
 			}
