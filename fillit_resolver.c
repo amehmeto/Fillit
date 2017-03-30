@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/25 21:26:50 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/29 09:52:23 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/30 03:58:56 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
  * **************************************************************************
-*/
+ */
 
 static void	delete_excess(struct mask *tetri, int i)
 {
@@ -26,7 +26,7 @@ static void	delete_excess(struct mask *tetri, int i)
 
 /*
  * **************************************************************************
-*/
+ */
 
 void		grid_init(struct mask *square, int size)
 {
@@ -67,19 +67,26 @@ static int	square_vs_tetri(struct mask *square, struct mask *tetri, int size)
 	unsigned long long		marker;
 	int						i;
 
+	(void)size;
 	marker = 0x8000000000000000;
 	i = -1;
 	while (++i <= 26)
 	{
-		while ((tetri[i].a & square->a) && !(tetri[i].a & 1))
-			tetri[i].a = tetri[i].a >> 1;
+		while ((tetri[i].a & square->a) && (!(tetri[i].a & 1)))
+				tetri[i].a = tetri[i].a >> 1;
+		/*	else
+			{
+				tetri[i].b = tetri[i].b >> 1;
+				tetri[i].b = tetri[i].b & marker;
+				tetri[i].a = tetri[i].a >> 1;
+			}*/
+
 		if (!(tetri[i].a & square->a))
 			square->a = square->a ^ tetri[i].a;
 		else
 			return (i);
-	//	printf("\nSquare %d\n", i);
-	//	fillit_displayer(tetri, size);
-		(void)size;
+		//	printf("\nSquare %d\n", i);
+		//	fillit_displayer(tetri, size);
 	}
 	return (0);
 }
@@ -98,22 +105,22 @@ void		fillit_resolver(struct mask *tetri)
 	grid_init(&square, size);
 	i = square_vs_tetri(&square, tetri, size);
 	delete_excess(tetri, i);
-	while (size <= 16)
+	while (size < 16)
 	{
-		printf("\n\nSize %d\n", size);
+		printf("Size %d\n", size);
 		fillit_displayer(tetri, size);
 		size++;
 	}
-/*
-** while (square_vs_tetri(&square, tetri) && size < 16)
-** {
-** 		printf("\nsize = %d\n", size);
-** 		square.a = 0;
-** 		square.b = 0;
-** 		square.c = 0;
-** 		square.d = 0;
-** 		grid_init(&square, ++size);
-** 		}
-*/
+	/*
+	 ** while (square_vs_tetri(&square, tetri) && size < 16)
+	 ** {
+	 ** 		printf("\nsize = %d\n", size);
+	 ** 		square.a = 0;
+	 ** 		square.b = 0;
+	 ** 		square.c = 0;
+	 ** 		square.d = 0;
+	 ** 		grid_init(&square, ++size);
+	 ** 		}
+	 */
 	(void)tetri;
 }
