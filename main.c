@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 21:56:01 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/30 01:30:25 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/30 08:54:40 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int					main(int ac, char **av)
 {
-	struct mask		tetri[26];
+	struct mask		tetri[27];
 	int				a;
 	int				fd;
 

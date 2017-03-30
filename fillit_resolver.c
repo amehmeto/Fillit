@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/25 21:26:50 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/30 03:58:56 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/30 09:18:02 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@
 
 static void	delete_excess(struct mask *tetri, int i)
 {
-	while (tetri[i++].a)
-	{
-		tetri[i - 1].a = 0;
-	}
+	printf("##%d\n", i);
+	if (i == -1)
+		i = 26;
+	tetri[i].a = ~(0ULL);
+	tetri[i].b = ~(0ULL);
+	tetri[i].c = ~(0ULL);
+	tetri[i].d = ~(0ULL);
 }
 
 /*
@@ -70,25 +73,49 @@ static int	square_vs_tetri(struct mask *square, struct mask *tetri, int size)
 	(void)size;
 	marker = 0x8000000000000000;
 	i = -1;
-	while (++i <= 26)
+	while (++i <= 25)
 	{
-		while ((tetri[i].a & square->a) && (!(tetri[i].a & 1)))
-				tetri[i].a = tetri[i].a >> 1;
-		/*	else
-			{
-				tetri[i].b = tetri[i].b >> 1;
-				tetri[i].b = tetri[i].b & marker;
-				tetri[i].a = tetri[i].a >> 1;
-			}*/
+		while ((tetri[i].a & square->a) ||
+			(tetri[i].b & square->b) ||
+			(tetri[i].c & square->c) ||
+			(tetri[i].d & square->d))
+		{		
+			tetri[i].d >>= 1;
+			tetri[i].d |= ((tetri[i].c & 1) << 63);
+			tetri[i].c >>= 1;
+			tetri[i].c |= ((tetri[i].b & 1) << 63);
+			tetri[i].b >>= 1;
+			tetri[i].b |= ((tetri[i].a & 1) << 63);
+			tetri[i].a >>= 1;
+		//	if (!(tetri[i].a & 1))
+		//		tetri[i].a = tetri[i].a >> 1;
+		//	else
+		//	{
+		//		tetri[i].b = tetri[i].b >> 1;
+		//		tetri[i].b = tetri[i].b & marker;
+		//		tetri[i].a = tetri[i].a >> 1;
+		//	}
+			if (tetri[i].a == 0 && tetri[i].b == 0 &&
+				tetri[i].c == 0 && tetri[i].d == 0)
+				break ;
+		}
 
-		if (!(tetri[i].a & square->a))
-			square->a = square->a ^ tetri[i].a;
-		else
+		if (!tetri[i].a && !tetri[i].b && !tetri[i].c && !tetri[i].d)
 			return (i);
+		if (!(tetri[i].a & square->a) &&
+			!(tetri[i].b & square->b) &&
+			!(tetri[i].c & square->c) &&
+			!(tetri[i].d & square->d))
+		{
+			square->a = square->a ^ tetri[i].a;
+			square->b ^= tetri[i].b;
+			square->c ^= tetri[i].c;
+			square->d ^= tetri[i].d;
+		}
 		//	printf("\nSquare %d\n", i);
 		//	fillit_displayer(tetri, size);
 	}
-	return (0);
+	return (-1);
 }
 
 void		fillit_resolver(struct mask *tetri)
@@ -101,11 +128,11 @@ void		fillit_resolver(struct mask *tetri)
 	square.b = 0;
 	square.c = 0;
 	square.d = 0;
-	size = 15;
+	size = 16;
 	grid_init(&square, size);
 	i = square_vs_tetri(&square, tetri, size);
 	delete_excess(tetri, i);
-	while (size < 16)
+	while (size <= 16)
 	{
 		printf("Size %d\n", size);
 		fillit_displayer(tetri, size);
