@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 14:45:52 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/30 07:43:55 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/31 11:19:39 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,27 @@
  * **************************************************************************
 */
 
-static void				struct_init(struct mask *tetri, int j)
+static void			struct_init(unsigned long long tetri[27][4], int j)
 {
-	tetri[j].a = 0;
-	tetri[j].b = 0;
-	tetri[j].c = 0;
-	tetri[j].d = 0;
+	tetri[j][0] = 0;
+	tetri[j][1] = 0;
+	tetri[j][2] = 0;
+	tetri[j][3] = 0;
 }
 
-static void				fillit_tetri_remodel(struct mask *tetri, int j)
+static void			fillit_tetri_remodel(unsigned long long tetri[27][4], int j)
 {
-	while (tetri[j].a < 0x1000000000000)
-		tetri[j].a = tetri[j].a << 16;
-	while (!(tetri[j].a & 0x8000800080008000))
-		tetri[j].a = tetri[j].a << 1;
+	while (tetri[j][0] < 0x1000000000000)
+		tetri[j][0] <<= 16;
+	while (!(tetri[j][0] & 0x8000800080008000))
+		tetri[j][0] <<= 1;
 }
 
-void					fillit_encoder(int fd, struct mask *tetri)
+void				fillit_encoder(int fd, unsigned long long tetri[27][4])
 {
 	char				buffer[BUFF_SIZE + 1];
 	unsigned long long	marker;
-	int					ret;
+	ssize_t				ret;
 	int					i;
 	int					j;
 
@@ -53,13 +53,13 @@ void					fillit_encoder(int fd, struct mask *tetri)
 		while (buffer[++i])
 		{
 			if (buffer[i] == '#')
-				tetri[j].a = tetri[j].a | marker;
+				tetri[j][0] |= marker;
 			if (buffer[i] != '\n')
-				marker = marker >> 1;
+				marker >>= 1;
 			else
-				marker = marker >> 12;
+				marker >>= 12;
 		}
 		fillit_tetri_remodel(tetri, j);
 	}
-	tetri[++j].a = 0;
+	tetri[++j][0] = ~(0ULL);
 }

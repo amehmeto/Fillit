@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:52:12 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/29 03:32:50 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/31 13:26:49 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ struct	mask
 };
 
 int		fillit_is_sample_valid(int fd);
-void	fillit_encoder(int fd, struct mask *tetri);
-void	fillit_resolver(struct mask *tetri);
-int		fillit_displayer(struct mask *tetri, int size);
+void	fillit_encoder(int fd, unsigned long long tetri[27][4]);
+void	fillit_resolver(unsigned long long tetri[27][4]);
+int		fillit_displayer(unsigned long long tetri[27][4], int size, int i);
+void	grid_init(unsigned long long square[4], int size);
+
 
 #endif

@@ -6,13 +6,23 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 23:35:33 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/30 09:04:11 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/31 13:28:47 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void		points_initializer(int size, char *r)
+static void		delete_excess(unsigned long long tetri[27][4], int i)
+{
+	if (i == -1)
+		i = 26;
+	tetri[i][0] = ~(0ULL);
+	tetri[i][1] = ~(0ULL);
+	tetri[i][2] = ~(0ULL);
+	tetri[i][3] = ~(0ULL);
+}
+
+static void		points_initializer(int size, char *r)
 {
 	int		i;
 	int		j;
@@ -30,93 +40,66 @@ void		points_initializer(int size, char *r)
 	r[i] = '\0';
 }
 
-int			fillit_displayer(struct mask *tetri, int size)
+static void		tetri_printer(unsigned long long tetri[27][4], int size, char *r)
 {
 	unsigned long long		printer;
 	int						i;
 	int						j;
+	int						k;
+
+	k = -1;
+	while (++k < 4)
+	{
+		j = -1;
+		while (tetri[++j][k] != ~(0ULL))
+		{
+			printer = 0x8000000000000000;
+			i = size * 4 * k + (k * 4) - 1;
+			while (r[++i])
+			{
+				if (r[i] != '\n')
+				{
+					if (tetri[j][k] & printer)
+						r[i] = 'A' + (char)j;
+					printer >>= 1;
+				}
+				else
+					printer >>= (16 - size);
+			}
+		}
+	}
+}
+
+int			fillit_displayer(unsigned long long tetri[27][4], int size, int j)
+{
+	char					*ret1;
+	char					*ret2;
 	char					*r;
+	int						i;
 
 	if (!(r = (char*)malloc(sizeof(char) * 273)))
 		return (1);
 	points_initializer(size, r);
-	j = -1;
-	while (tetri[++j].a != ~(0ULL))
-	{
-		printer = 0x8000000000000000;
-		i = -1;
-		while (r[++i])
-		{
-			if (r[i] != '\n')
-			{
-				if (tetri[j].a & printer)
-					r[i] = 'A' + j;
-				printer = printer >> 1;
-			}
-			else
-				printer = printer >> (16 - size);
-		}
-	}
-	j = -1;
-	while (tetri[++j].b != ~(0ULL))
-	{
-		printer = 0x8000000000000000;
-		i = size * 4 + 4 - 1;
-		while (r[++i])
-		{
-			if (r[i] != '\n')
-			{
-				if (tetri[j].b & printer)
-					r[i] = 'A' + j;
-				printer = printer >> 1;
-			}
-			else
-				printer = printer >> (16 - size);
-		}
-	}
-	j = -1;
-	while (tetri[++j].c != ~(0ULL))
-	{
-		printer = 0x8000000000000000;
-		i = size * 8 + 8 - 1;
-		while (r[++i])
-		{
-			if (r[i] != '\n')
-			{
-				if (tetri[j].c & printer)
-					r[i] = 'A' + j;
-				printer = printer >> 1;
-			}
-			else
-				printer = printer >> (16 - size);
-		}
-	}
-	j = -1;
-	while (tetri[++j].d != ~(0ULL))
-	{
-		printer = 0x8000000000000000;
-		i = size * 12 + 12 - 1;
-		while (r[++i])
-		{
-			if (r[i] != '\n')
-			{
-				if (tetri[j].d & printer)
-					r[i] = 'A' + j;
-				printer = printer >> 1;
-			}
-			else
-				printer = printer >> (16 - size);
-		}
-	}
+	delete_excess(tetri, j);
+	tetri_printer(tetri, size, r);
+	printf("Size = %d\n\n", size);
+	ret1 = NULL;
+	ret2 = NULL;
 	i = -1;
 	while (r[++i])
 	{
 		if (ft_isalpha(r[i]))
-			ft_putstr(
-				ft_strjoin("\033[", ft_strjoin(ft_itoa(30 + (r[i] % 7)), "m")));
+		{
+			ret1 = ft_itoa(30 + (r[i] % 7));
+			ret2 = ft_strjoin(ret1, "m");
+			ret1 = ft_strjoin("\033[", ret2);
+			free(ret2);
+			ft_putstr(ret1);
+			free(ret1);
+		}
 		ft_putchar(r[i]);
 		ft_putstr("\033[0m");
 	}
-	ft_putstr("\033[0m");
+	free(r);
 	return (0);
 }

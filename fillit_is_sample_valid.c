@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:32:44 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/28 05:14:46 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/03/31 03:44:01 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 static size_t		ft_strlen_mod(const char *s)
 {
-	int		i;
+	size_t		i;
 
 	i = 0;
 	while (s[i] != '\n')
@@ -31,8 +31,8 @@ static size_t		ft_strlen_mod(const char *s)
 
 static size_t		ft_sharp_counter(const char *s)
 {
-	int		i;
-	int		c;
+	size_t		c;
+	int			i;
 
 	i = 0;
 	c = 0;
@@ -62,11 +62,11 @@ static int			ft_only_sharps_and_dots(char *s)
 
 int					fillit_is_sample_valid(int fd)
 {
-	int		ret;
-	char	buffer[BUFF_SIZE + 1];
-	int		i;
-	int		n;
-	int		a;
+	char		buffer[BUFF_SIZE + 1];
+	ssize_t		ret;
+	int			i;
+	int			n;
+	int			a;
 
 	while ((ret = read(fd, buffer, BUFF_SIZE)) == 21 || ret == 20)
 	{
