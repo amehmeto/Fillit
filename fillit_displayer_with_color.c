@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 23:35:33 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/03 16:34:50 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/03 16:46:00 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ static void		tetri_printer(unsigned long long tetri[27][4], int size, char *r)
 
 int			fillit_displayer(unsigned long long tetri[27][4], int size, int j)
 {
-	unsigned long long		temp_tetri[27][4];
+//	unsigned long long		temp_tetri[27][4];
 	char					*ret1;
 	char					*ret2;
 	char					*r;
 	int						i;
 	int						k;
-	int						l;
+//	int						l;
 
 	if (!(r = (char*)malloc(sizeof(char) * 273)))
 		return (1);
