@@ -6,25 +6,11 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/25 21:26:50 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/03/31 13:25:13 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/03 16:33:46 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-/*
- * **************************************************************************
- */
-
-//static void	delete_excess(unsigned long long tetri[27][4], int i)
-//{
-//	if (i == -1)
-//		i = 26;
-//	tetri[i][0] = ~(0ULL);
-//	tetri[i][1] = ~(0ULL);
-//	tetri[i][2] = ~(0ULL);
-//	tetri[i][3] = ~(0ULL);
-//}
 
 /*
  * **************************************************************************
@@ -36,22 +22,17 @@ void		grid_init(unsigned long long square[4], int size)
 	unsigned long long	marker;
 	int					size_cpy;
 	int					i;
+	int					j;
 
-	quartr_to_fill = NULL;
 	size_cpy = size;
 	i = -1;
+	j = 0;
 	while (++i <= size)
 	{
-		if (i <= 4)
-			quartr_to_fill = &square[0];
-		if (i > 4 && i <= 8)
-			quartr_to_fill = &square[1];
-		if (i > 8 && i <= 12)
-			quartr_to_fill = &square[2];
-		if (i > 12 && i <= 16)
-			quartr_to_fill = &square[3];
-		*quartr_to_fill >>= 16;
+		if (i >= j * 4 && i <= (j + 1) * 4)
+			quartr_to_fill = &square[j++];
 		marker = 0x8000000000000000;
+		*quartr_to_fill >>= 16;
 		size_cpy = size;
 		while (size_cpy--)
 		{
@@ -59,26 +40,28 @@ void		grid_init(unsigned long long square[4], int size)
 			marker >>= 1;
 		}
 	}
-	square[0] = ~square[0];
-	square[1] = ~square[1];
-	square[2] = ~square[2];
-	square[3] = ~square[3];
+	j = -1;
+	while (++j < 4)
+		square[j] = ~square[j];
 }
 
-static int	square_vs_tetri(unsigned long long square[4], 
-							unsigned long long tetri[27][4], int size)
+void		tetri_cpy(unsigned long long tetri[27][4],
+		unsigned long long temp_tetri[27][4])
 {
-	unsigned long long		marker;
-	int						i;
+	int		i;
+	int		j;
 
-	marker = 0x8000000000000000;
-	(void)size;
 	i = -1;
-	while (++i <= 25)
+	while (++i < 27)
 	{
-		while ((tetri[i][0] & square[0]) || (tetri[i][1] & square[1]) ||
-				(tetri[i][2] & square[2]) || (tetri[i][3] & square[3]))
-		{
+		j = -1;
+		while (++j < 4)
+			temp_tetri[i][j] = tetri[i][j];
+	}
+}
+
+static void		shift_by_one(unsigned long long tetri[27][4], int i)
+{
 			tetri[i][3] >>= 1;
 			tetri[i][3] |= ((tetri[i][2] & 1) << 63);
 			tetri[i][2] >>= 1;
@@ -86,9 +69,19 @@ static int	square_vs_tetri(unsigned long long square[4],
 			tetri[i][1] >>= 1;
 			tetri[i][1] |= ((tetri[i][0] & 1) << 63);
 			tetri[i][0] >>= 1;
-			if (!(tetri[i][0]) && !(tetri[i][1]) && !(tetri[i][2]) && !(tetri[i][3]))
-				break ;
-		}
+}
+
+static int	square_vs_tetri(unsigned long long square[4],
+							unsigned long long tetri[27][4])
+{
+	int		i;
+
+	i = -1;
+	while (++i <= 25)
+	{
+		while ((tetri[i][0] & square[0]) || (tetri[i][1] & square[1]) ||
+				(tetri[i][2] & square[2]) || (tetri[i][3] & square[3]))
+			shift_by_one(tetri, i);
 		if (!tetri[i][0] && !tetri[i][1] && !tetri[i][2] && !tetri[i][3])
 			return (i);
 		if ((!(tetri[i][0] & square[0])) && (!(tetri[i][1] & square[1])) &&
@@ -100,28 +93,34 @@ static int	square_vs_tetri(unsigned long long square[4],
 			square[3] ^= tetri[i][3];
 		}
 	}
-	return (-1);
+	return (-2);
 }
 
-void		fillit_resolver(unsigned long long tetri[27][4])
+int		fillit_resolver(unsigned long long tetri[27][4])
 {
+	unsigned long long		temp_tetri[27][4];
 	unsigned long long		square[4];
 	int						size;
 	int						i;
+	int						k;
+	int						l;
 
 	square[0] = 0;
 	square[1] = 0;
 	square[2] = 0;
 	square[3] = 0;
-	size = 15;
-	grid_init(square, size);
-	i = square_vs_tetri(square, tetri, size);
-	while (size < 16)
+	size = 1;
+	while (size < 10)
 	{
-		printf("Size %d\n\n", size);
-		system("clear");
-		fillit_displayer(tetri, size, i);
-		sleep(1);
+		grid_init(square, size);
+		printf("\033[31mReinitialisation grille (%d)\n", size);
+		tetri_cpy(tetri, temp_tetri);
+		k = -1;
+		printf("square_vs_tetri = %d\nEnvoi au displayer\n\033[0m", i);
+		i = square_vs_tetri(square, temp_tetri);
+		fillit_displayer(temp_tetri, size, i);
 		size++;
 	}
+	return (1);
 }
+
