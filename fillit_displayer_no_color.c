@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 23:38:16 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/06 21:08:06 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/06 21:30:13 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ static void		points_initializer(int size, char *r)
 	r[i] = '\0';
 }
 
-static void		t_printer(unsigned long long t[27][4], int size,
-																char *r)
+static void		t_printer(unsigned long long t[27][4], int size, char *r)
 {
 	unsigned long long		printer;
 	int						i;
@@ -59,20 +58,17 @@ static void		t_printer(unsigned long long t[27][4], int size,
 			while (r[++i])
 			{
 				if (r[i] != '\n')
-				{
 					if (t[j][k] & printer)
 						r[i] = 'A' + (char)j;
-					printer >>= 1;
-				}
-				else
-					printer >>= (16 - size);
+				printer >>= 1;
+				if (r[i] == '\n')
+					printer >>= (15 - size);
 			}
 		}
 	}
 }
 
-int				fillit_displayer(unsigned long long t[27][4], int size,
-																	int i)
+int				fillit_displayer(unsigned long long t[27][4], int size, int i)
 {
 	char					*r;
 
