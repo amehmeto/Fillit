@@ -6,11 +6,10 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:32:44 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/06 19:41:39 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/06 22:14:44 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Libft/libft.h"
 #include "fillit.h"
 
 #define BUFF_SIZE 21
@@ -71,13 +70,10 @@ int					fillit_is_sample_valid(int fd)
 	while ((ret = read(fd, buffer, BUFF_SIZE)) == 21 || ret == 20)
 	{
 		buffer[ret] = '\0';
-// Only . or # in description
 		if ((a = ft_only_sharps_and_dots(buffer)))
 			return (10);
-// Not more than 4 sharps in description
 		if (ft_sharp_counter(buffer) != 4)
 			return (20);
-// Check if stricly begins with description, seperated by one line
 		i = 0;
 		if (ret == 21 || ret == 20)
 		{

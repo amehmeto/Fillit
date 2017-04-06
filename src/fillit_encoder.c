@@ -6,11 +6,10 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 14:45:52 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/06 19:42:00 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/06 22:14:57 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Libft/libft.h"
 #include "fillit.h"
 
 #define BUFF_SIZE 21
