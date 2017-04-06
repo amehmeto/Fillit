@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 23:35:33 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/03 16:46:00 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/06 01:16:49 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void		delete_excess(unsigned long long tetri[27][4], int i)
 {
-	if (i == -2)
+	if (i > 27)
 		i = 26;
 	tetri[i][0] = ~(0ULL);
 	tetri[i][1] = ~(0ULL);
@@ -78,18 +78,17 @@ int			fillit_displayer(unsigned long long tetri[27][4], int size, int j)
 	char					*r;
 	int						i;
 	int						k;
-//	int						l;
+	int						l;
 
 	if (!(r = (char*)malloc(sizeof(char) * 273)))
 		return (1);
 	points_initializer(size, r);
-	k = -1;
-/*	while (++k < 27)
+/*	k = -1;
+	while (++k < 27)
 	{
 		l = -1;
 		while (++l < 4)
-			printf("temp_tetri #%d.%d = %llu || %llu = tetri %d.%d\n", 
-					k, l, temp_tetri[k][l], tetri[k][l], k, l);
+			printf("tetri[%d][%d] = %llu\n", k, l, tetri[k][l]);
 	}*/
 	delete_excess(tetri, j);
 	tetri_printer(tetri, size, r);
@@ -113,6 +112,6 @@ int			fillit_displayer(unsigned long long tetri[27][4], int size, int j)
 		ft_putstr("\033[0m");
 	}
 	free(r);
-	sleep(2);
+	usleep(10);
 	return (0);
 }

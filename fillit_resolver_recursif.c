@@ -6,15 +6,15 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/25 21:26:50 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/05 03:59:34 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/06 02:15:16 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
 /*
-** **************************************************************************
-*/
+ ** **************************************************************************
+ */
 
 void			grid_init(unsigned long long square[4], int size)
 {
@@ -30,14 +30,14 @@ void			grid_init(unsigned long long square[4], int size)
 	j = 0;
 	while (++i < size)
 	{
-//		printf("\033[33mi = %d\nj = %d \t j * 4 = %d \t (j + 1) * 4 = %d \n\033[0m",
-//													i, j, j * 4, (j + 1) * 4);
+//		printf("\033[33mi = %d\nj = %d \t j * 4 = %d \t (j + 1) * 4 = %d \n\033[0m"
+//												,	i, j, j * 4, (j + 1) * 4);
 		if (i >= j * 4 && i < (j + 1) * 4)
 		{
 			quartr_to_fill = &square[j++];
 			*quartr_to_fill = 0;
 		}
-//		printf("j = %d\n", j);
+		//		printf("j = %d\n", j);
 		marker = 0x8000000000000000;
 		*quartr_to_fill >>= 16;
 		size_cpy = size;
@@ -50,9 +50,9 @@ void			grid_init(unsigned long long square[4], int size)
 	j = -1;
 	while (++j < 4 && square[j] != ~(0ULL))
 		square[j] = ~square[j];
-//	j = -1;
-//	while (++j < 4)
-//		printf("square[%d] = %llu\n", j, square[j]);
+	//	j = -1;
+	//	while (++j < 4)
+	//		printf("square[%d] = %llu\n", j, square[j]);
 }
 
 /*
@@ -89,45 +89,73 @@ static void		shift_by_one(unsigned long long tetri[27][4], int i)
 	tetri[i][0] >>= 1;
 }
 
-static int		square_vs_tetri(unsigned long long square[4],
-		unsigned long long tetri[27][4],
-		int i)
+static void		remove_tetri_from_square(unsigned long long tetri[27][4],
+										unsigned long long square[4], int i)
 {
+	square[0] -= tetri[i][0];
+	square[1] -= tetri[i][1];
+	square[2] -= tetri[i][2];
+	square[3] -= tetri[i][3];
+}
+
+static void		put_tetri_in_square(unsigned long long tetri[27][4],
+									unsigned long long square[4], int i)
+{
+	square[0] ^= tetri[i][0];
+	square[1] ^= tetri[i][1];
+	square[2] ^= tetri[i][2];
+	square[3] ^= tetri[i][3];
+}
+static int		square_vs_tetri(unsigned long long square[4],
+								unsigned long long tetri[27][4], int i)
+{
+	unsigned long long		tetri_cpy[4];
+	int						ret;
+
 	if (tetri[i][0] == ~(0ULL))
 		return (i + 27);
-
 	while ((tetri[i][0] & square[0]) || (tetri[i][1] & square[1]) ||
 			(tetri[i][2] & square[2]) || (tetri[i][3] & square[3]))
-	{
-		if (i == 25)
-			printf("Decalage du tetri %c\n", 'A' + i);
 		shift_by_one(tetri, i);
-	}
 	if (!tetri[i][0] && !tetri[i][1] && !tetri[i][2] && !tetri[i][3])
 	{
 		printf("tetri %c == 0\n", 'A' + i);
 		return (i);
 	}
-	printf("square[0] = %llu\n", square[0]);
-	printf("square[1] = %llu\n", square[1]);
-	printf("square[2] = %llu\n", square[2]);
-	printf("square[3] = %llu\n", square[3]);
-	printf("tetri[%c][0] = %llu\n", i + 'A', tetri[i][0]);
-	printf("tetri[%c][1] = %llu\n", i + 'A', tetri[i][1]);
-	printf("tetri[%c][2] = %llu\n", i + 'A', tetri[i][2]);
-	printf("tetri[%c][3] = %llu\n", i + 'A', tetri[i][3]);
-	printf("tetri[%c][2] & square[2] = %llu & %llu = %llu\n", i + 'A',
-			tetri[i][2], square[2], tetri[i][2] & square[2]);
-
-	if ((!(tetri[i][0] & square[0])) && (!(tetri[i][1] & square[1])) &&
-			(!(tetri[i][2] & square[2])) && (!(tetri[i][3] & square[3])))
-	{
-		square[0] ^= tetri[i][0];
-		square[1] ^= tetri[i][1];
-		square[2] ^= tetri[i][2];
-		square[3] ^= tetri[i][3];
-	}
+	put_tetri_in_square(tetri, square, i);
 	printf("On a posey %c\n", 'A' + i);
+	tetri_cpy[0] = tetri[i + 1][0];
+	tetri_cpy[1] = tetri[i + 1][1];
+	tetri_cpy[2] = tetri[i + 1][2];
+	tetri_cpy[3] = tetri[i + 1][3];
+	printf("On a copiey %c\n", 'A' + i + 1);
+	printf("tetri_cpy[0] = %llu\n", tetri_cpy[0]);
+	while (tetri[i + 1][0] != ~(0ULL) &&
+			(ret = square_vs_tetri(square, tetri, i + 1)) < 27)
+	{
+		printf("ret = %d\n", ret);
+		tetri[i + 1][0] = tetri_cpy[0];
+		tetri[i + 1][1] = tetri_cpy[1];
+		tetri[i + 1][2] = tetri_cpy[2];
+		tetri[i + 1][3] = tetri_cpy[3];
+		printf("On a reinit %c\n", 'A' + i + 1);
+		printf("%c = %llu\n", 'A' + i + 1, tetri[i + 1][0]);
+		remove_tetri_from_square(tetri, square, i);
+		printf("On a sup %c du carrey\n", 'A' + i);
+		shift_by_one(tetri, i);
+		while ((tetri[i][0] & square[0]) || (tetri[i][1] & square[1]) ||
+				(tetri[i][2] & square[2]) || (tetri[i][3] & square[3]))
+			shift_by_one(tetri, i);
+		printf("On a shiftey %c par au moins 1\n", 'A' + i);
+		put_tetri_in_square(tetri, square, i);
+		printf("On a posey %c\n", 'A' + i);
+	}
+	//	if ((!(tetri[i][0] & square[0])) && (!(tetri[i][1] & square[1])) &&
+	//			(!(tetri[i][2] & square[2])) && (!(tetri[i][3] & square[3])))
+	//	{
+		put_tetri_in_square(tetri, square, i);
+	//	}
+	printf("Yoooo On a posey %c\n", 'A' + i);
 	return (square_vs_tetri(square, tetri, i + 1));
 }
 

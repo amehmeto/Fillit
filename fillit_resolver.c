@@ -6,15 +6,15 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/25 21:26:50 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/03 16:49:45 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/04 20:27:44 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
 /*
-** **************************************************************************
-*/
+ ** **************************************************************************
+ */
 
 void			grid_init(unsigned long long square[4], int size)
 {
@@ -46,8 +46,8 @@ void			grid_init(unsigned long long square[4], int size)
 }
 
 /*
-** **************************************************************************
-*/
+ ** **************************************************************************
+ */
 
 void			tetri_cpy(unsigned long long tetri[27][4],
 		unsigned long long temp_tetri[27][4])
@@ -65,8 +65,8 @@ void			tetri_cpy(unsigned long long tetri[27][4],
 }
 
 /*
-** **************************************************************************
-*/
+ ** **************************************************************************
+ */
 
 static void		shift_by_one(unsigned long long tetri[27][4], int i)
 {
@@ -80,26 +80,36 @@ static void		shift_by_one(unsigned long long tetri[27][4], int i)
 }
 
 static int		square_vs_tetri(unsigned long long square[4],
-							unsigned long long tetri[27][4])
+		unsigned long long tetri[27][4],
+		int i)
 {
-	int		i;
 
-	i = -1;
-	while (++i <= 25)
+	while ((tetri[i][0] & square[0]) || (tetri[i][1] & square[1]) ||
+			(tetri[i][2] & square[2]) || (tetri[i][3] & square[3]))
 	{
-		while ((tetri[i][0] & square[0]) || (tetri[i][1] & square[1]) ||
-				(tetri[i][2] & square[2]) || (tetri[i][3] & square[3]))
-			shift_by_one(tetri, i);
-		if (!tetri[i][0] && !tetri[i][1] && !tetri[i][2] && !tetri[i][3])
-			return (i);
-		if ((!(tetri[i][0] & square[0])) && (!(tetri[i][1] & square[1])) &&
-				(!(tetri[i][2] & square[2])) && (!(tetri[i][3] & square[3])))
+		printf("Decalage du tetri %c\n", 'A' + i);
+		shift_by_one(tetri, i);
+	}
+	if (!tetri[i][0] && !tetri[i][1] && !tetri[i][2] && !tetri[i][3])
+	{
+		printf("tetri %c == 0\n", 'A' + i);
+		return (i);
+	}
+	if ((!(tetri[i][0] & square[0])) && (!(tetri[i][1] & square[1])) &&
+			(!(tetri[i][2] & square[2])) && (!(tetri[i][3] & square[3])))
+	{
+		square[0] ^= tetri[i][0];
+		square[1] ^= tetri[i][1];
+		square[2] ^= tetri[i][2];
+		square[3] ^= tetri[i][3];
+		printf("On a posey %c\n", 'A' + i);
+		if (tetri[i + 1][0] != ~(0ULL))
 		{
-			square[0] ^= tetri[i][0];
-			square[1] ^= tetri[i][1];
-			square[2] ^= tetri[i][2];
-			square[3] ^= tetri[i][3];
+			printf("tetri %c != ~(0ULL)\n", 'A' + i + 1);
+			return (square_vs_tetri(square, tetri, i+1));
 		}
+		printf("wesh\n");
+		printf("tetri[i + 1][0] == %llu\n", tetri[i + 1][0]);
 	}
 	return (-2);
 }
@@ -110,21 +120,26 @@ int				fillit_resolver(unsigned long long tetri[27][4])
 	unsigned long long		square[4];
 	int						size;
 	int						i;
+	int						j;
 
 	square[0] = 0;
 	square[1] = 0;
 	square[2] = 0;
 	square[3] = 0;
-	size = 1;
-	while (size < 10)
+	size = 3;
+	i = -2;
+	while (size < 6 && (i == -2 || i >= 0))
 	{
+		j = 0;
 		grid_init(square, size);
 		printf("\033[31mReinitialisation grille (%d)\n", size);
 		tetri_cpy(tetri, temp_tetri);
-		i = square_vs_tetri(square, temp_tetri);
+		i = square_vs_tetri(square, temp_tetri, j);
 		printf("square_vs_tetri = %d\nEnvoi au displayer\n\033[0m", i);
 		fillit_displayer(temp_tetri, size, i);
 		size++;
+		if (i == -3)
+			break;
 	}
 	return (1);
 }
