@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 14:45:52 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/06 03:50:46 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/06 19:42:00 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,23 @@
 ** **************************************************************************
 */
 
-static void			struct_init(unsigned long long tetri[27][4], int j)
+static void			struct_init(unsigned long long t[27][4], int j)
 {
-	tetri[j][0] = 0;
-	tetri[j][1] = 0;
-	tetri[j][2] = 0;
-	tetri[j][3] = 0;
+	t[j][0] = 0;
+	t[j][1] = 0;
+	t[j][2] = 0;
+	t[j][3] = 0;
 }
 
-static void			fillit_tetri_remodel(unsigned long long tetri[27][4], int j)
+static void			fillit_t_remodel(unsigned long long t[27][4], int j)
 {
-	while (tetri[j][0] < 0x1000000000000)
-		tetri[j][0] <<= 16;
-	while (!(tetri[j][0] & 0x8000800080008000))
-		tetri[j][0] <<= 1;
+	while (t[j][0] < 0x1000000000000)
+		t[j][0] <<= 16;
+	while (!(t[j][0] & 0x8000800080008000))
+		t[j][0] <<= 1;
 }
 
-void				fillit_encoder(int fd, unsigned long long tetri[27][4])
+void				fillit_encoder(int fd, unsigned long long t[27][4])
 {
 	char				buffer[BUFF_SIZE + 1];
 	unsigned long long	marker;
@@ -47,19 +47,19 @@ void				fillit_encoder(int fd, unsigned long long tetri[27][4])
 	while ((ret = read(fd, buffer, BUFF_SIZE)) == 21 || ret == 20)
 	{
 		buffer[ret] = '\0';
-		struct_init(tetri, ++j);
+		struct_init(t, ++j);
 		marker = 0x8000000000000000;
 		i = -1;
 		while (buffer[++i])
 		{
 			if (buffer[i] == '#')
-				tetri[j][0] |= marker;
+				t[j][0] |= marker;
 			if (buffer[i] != '\n')
 				marker >>= 1;
 			else
 				marker >>= 12;
 		}
-		fillit_tetri_remodel(tetri, j);
+		fillit_t_remodel(t, j);
 	}
-	tetri[++j][0] = ~(0ULL);
+	t[++j][0] = ~(0ULL);
 }

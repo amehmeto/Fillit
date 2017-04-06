@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 21:56:01 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/06 03:47:31 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/06 20:56:09 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int					main(int ac, char **av)
 	if ((a = fillit_is_sample_valid(fd)))
 	{
 		ft_putstr("error\n");
-//		printf("sample is not valid (%d)\n", a);
+		printf("sample is not valid (%d)\n", a);
 		return (0);
 	}
 	if ((fd = open(av[1], O_RDWR)) == -1)

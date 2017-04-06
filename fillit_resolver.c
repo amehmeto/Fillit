@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit_resolver_annex.c                            :+:      :+:    :+:   */
+/*   fillit_resolver.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/06 04:09:35 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/06 19:28:53 by amehmeto         ###   ########.fr       */
+/*   Created: 2017/04/06 20:46:57 by amehmeto          #+#    #+#             */
+/*   Updated: 2017/04/06 20:46:59 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void		quarter_filler(int size, unsigned long long *quartr_to_fill)
 	}
 }
 
-void			grid_init(unsigned long long square[4], int size)
+static void		grid_init(unsigned long long square[4], int size)
 {
 	unsigned long long	*quartr_to_fill;
 	int					i;
@@ -55,8 +55,8 @@ void			grid_init(unsigned long long square[4], int size)
 ** **************************************************************************
 */
 
-void			tetri_cpy(unsigned long long tetri[27][4],
-		unsigned long long temp_tetri[27][4])
+static void		t_cpy(unsigned long long t[27][4],
+						unsigned long long temp_t[27][4])
 {
 	int		i;
 	int		j;
@@ -66,6 +66,34 @@ void			tetri_cpy(unsigned long long tetri[27][4],
 	{
 		j = -1;
 		while (++j < 4)
-			temp_tetri[i][j] = tetri[i][j];
+			temp_t[i][j] = t[i][j];
 	}
+}
+
+int				fillit_resolver(unsigned long long t[27][4])
+{
+	unsigned long long		temp_t[27][4];
+	unsigned long long		square[4];
+	int						size;
+	int						i;
+	int						j;
+
+	square[0] = 0;
+	square[1] = 0;
+	square[2] = 0;
+	square[3] = 0;
+	size = 2;
+	i = -1;
+	while (size)
+	{
+		j = 0;
+		grid_init(square, size);
+		t_cpy(t, temp_t);
+		i = square_vs_t(square, temp_t, j);
+		size++;
+		if (i > 27)
+			break ;
+	}
+	fillit_displayer(temp_t, size - 1, (i > 27) ? i - 27 : i);
+	return (1);
 }

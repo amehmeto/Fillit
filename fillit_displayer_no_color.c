@@ -6,20 +6,20 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 23:38:16 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/06 04:18:59 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/06 21:08:06 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-static void		delete_excess(unsigned long long tetri[27][4], int i)
+static void		delete_excess(unsigned long long t[27][4], int i)
 {
 	if (i > 27)
 		i = 26;
-	tetri[i][0] = ~(0ULL);
-	tetri[i][1] = ~(0ULL);
-	tetri[i][2] = ~(0ULL);
-	tetri[i][3] = ~(0ULL);
+	t[i][0] = ~(0ULL);
+	t[i][1] = ~(0ULL);
+	t[i][2] = ~(0ULL);
+	t[i][3] = ~(0ULL);
 }
 
 static void		points_initializer(int size, char *r)
@@ -40,7 +40,7 @@ static void		points_initializer(int size, char *r)
 	r[i] = '\0';
 }
 
-static void		tetri_printer(unsigned long long tetri[27][4], int size,
+static void		t_printer(unsigned long long t[27][4], int size,
 																char *r)
 {
 	unsigned long long		printer;
@@ -52,7 +52,7 @@ static void		tetri_printer(unsigned long long tetri[27][4], int size,
 	while (++k < 4)
 	{
 		j = -1;
-		while (tetri[++j][k] != ~(0ULL))
+		while (t[++j][k] != ~(0ULL))
 		{
 			printer = 0x8000000000000000;
 			i = size * 4 * k + (k * 4) - 1;
@@ -60,7 +60,7 @@ static void		tetri_printer(unsigned long long tetri[27][4], int size,
 			{
 				if (r[i] != '\n')
 				{
-					if (tetri[j][k] & printer)
+					if (t[j][k] & printer)
 						r[i] = 'A' + (char)j;
 					printer >>= 1;
 				}
@@ -71,7 +71,7 @@ static void		tetri_printer(unsigned long long tetri[27][4], int size,
 	}
 }
 
-int				fillit_displayer(unsigned long long tetri[27][4], int size,
+int				fillit_displayer(unsigned long long t[27][4], int size,
 																	int i)
 {
 	char					*r;
@@ -79,8 +79,8 @@ int				fillit_displayer(unsigned long long tetri[27][4], int size,
 	if (!(r = (char*)malloc(sizeof(char) * 273)))
 		return (1);
 	points_initializer(size, r);
-	delete_excess(tetri, i);
-	tetri_printer(tetri, size, r);
+	delete_excess(t, i);
+	t_printer(t, size, r);
 	ft_putstr(r);
 	free(r);
 	return (0);
