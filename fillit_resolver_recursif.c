@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/06 04:17:01 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/06 05:40:41 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/06 19:38:31 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,15 @@ static void		put_tetri_in_square(unsigned long long tetri[27][4],
 	square[3] ^= tetri[i][3];
 }
 
+static void		one_tetri_cpy(unsigned long long t_src[4],
+								unsigned long long t_dst[4])
+{
+	t_dst[0] = t_src[0];
+	t_dst[1] = t_src[1];
+	t_dst[2] = t_src[2];
+	t_dst[3] = t_src[3];
+}
+
 static int		square_vs_tetri(unsigned long long square[4],
 								unsigned long long tetri[27][4], int i)
 {
@@ -59,19 +68,11 @@ static int		square_vs_tetri(unsigned long long square[4],
 	if (!tetri[i][0] && !tetri[i][1] && !tetri[i][2] && !tetri[i][3])
 		return (i);
 	put_tetri_in_square(tetri, square, i);
-//	fillit(&tetri_cpy, &tetri[i + 1]);
-	tetri_cpy[0] = tetri[i + 1][0];
-	tetri_cpy[1] = tetri[i + 1][1];
-	tetri_cpy[2] = tetri[i + 1][2];
-	tetri_cpy[3] = tetri[i + 1][3];
-//	fillit(&tetri[i + 1], &tetri_cpy);
+	one_tetri_cpy(tetri[i + 1], tetri_cpy);
 	while (tetri[i + 1][0] != ~(0ULL) &&
 			(ret = square_vs_tetri(square, tetri, i + 1)) < 27)
 	{
-		tetri[i + 1][0] = tetri_cpy[0];
-		tetri[i + 1][1] = tetri_cpy[1];
-		tetri[i + 1][2] = tetri_cpy[2];
-		tetri[i + 1][3] = tetri_cpy[3];
+		one_tetri_cpy(tetri_cpy, tetri[i + 1]);
 		remove_tetri_from_square(tetri, square, i);
 		shift_by_one(tetri, i);
 		while ((tetri[i][0] & square[0]) || (tetri[i][1] & square[1]) ||
