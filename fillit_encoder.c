@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 14:45:52 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/01 11:31:58 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/06 03:50:46 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #define BUFF_SIZE 21
 
 /*
- * **************************************************************************
+** **************************************************************************
 */
 
 static void			struct_init(unsigned long long tetri[27][4], int j)
@@ -62,7 +62,4 @@ void				fillit_encoder(int fd, unsigned long long tetri[27][4])
 		fillit_tetri_remodel(tetri, j);
 	}
 	tetri[++j][0] = ~(0ULL);
-//	tetri[j][1] = ~(0ULL);
-//	tetri[j][2] = ~(0ULL);
-//	tetri[j][3] = ~(0ULL);
 }

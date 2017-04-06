@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 23:38:16 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/06 02:25:20 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/06 04:18:59 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static void		points_initializer(int size, char *r)
 	r[i] = '\0';
 }
 
-static void		tetri_printer(unsigned long long tetri[27][4], int size, char *r)
+static void		tetri_printer(unsigned long long tetri[27][4], int size,
+																char *r)
 {
 	unsigned long long		printer;
 	int						i;
@@ -70,7 +71,8 @@ static void		tetri_printer(unsigned long long tetri[27][4], int size, char *r)
 	}
 }
 
-int			fillit_displayer(unsigned long long tetri[27][4], int size, int i)
+int				fillit_displayer(unsigned long long tetri[27][4], int size,
+																	int i)
 {
 	char					*r;
 
@@ -80,5 +82,6 @@ int			fillit_displayer(unsigned long long tetri[27][4], int size, int i)
 	delete_excess(tetri, i);
 	tetri_printer(tetri, size, r);
 	ft_putstr(r);
+	free(r);
 	return (0);
 }
