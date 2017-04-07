@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:32:44 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/07 03:59:11 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/07 04:13:59 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,9 @@ static int			ft_only_sharps_and_dots(char *s)
 	while (s[i])
 	{
 		if (s[i] != '.' && s[i] != '#' && s[i] != '\n')
-				return (1);
-		
+			return (1);
 		if (s[i] == '#')
-			links += ft_links_counter(s, i); 
+			links += ft_links_counter(s, i);
 		i++;
 	}
 	if (links != 6 && links != 8)
@@ -79,18 +78,17 @@ static int			ft_blackslahes_wrong(const char *s, ssize_t ret)
 	{
 		if (!s[i])
 			return (2);
-//		printf("i = %d \t s[i] = %c\n", i, s[i]);
-//		printf("i + 1 modulo 5 = %d \n", ((i + 1) % 5));
-		if ((i +1) % 5)
+		if ((i + 1) % 5)
 		{
 			if (s[i] == '\n')
 				return (3);
 		}
 		else
+		{
 			if (s[i] != '\n')
 				return (4);
+		}
 	}
-//	printf("s[20] = %c \t ret = %zd\n",s[20],ret );
 	if (s[20] && ret == 20)
 		return (6);
 	if (s[20])
@@ -119,7 +117,6 @@ int					fillit_is_sample_valid(int fd)
 		if ((a = ft_blackslahes_wrong(buffer, ret)))
 			return (30 + a);
 	}
-//	printf("ret = %zd\n", ret);
 	if (ret == 0)
 		return (1);
 	if (ret == 20)
@@ -133,7 +130,6 @@ int					fillit_is_sample_valid(int fd)
 			return (30 + a);
 	}
 	buffer[ret] = '\0';
-//	printf("ret = %zd\n", ret);
 	if (ret != 20 && ret != 21 && ret != 0)
 		return (1);
 	if (close(fd) == -1)
