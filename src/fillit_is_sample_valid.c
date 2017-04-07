@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:32:44 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/07 00:52:42 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/07 03:26:43 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,6 @@
 /*
 ** ************************************************************************** **
 */
-
-static size_t		ft_strlen_mod(const char *s)
-{
-	size_t		i;
-
-	i = 0;
-	while (s[i] != '\n')
-		i++;
-	return (i);
-}
 
 static int			ft_links_counter(const char *s, int i)
 {
@@ -43,7 +33,7 @@ static int			ft_links_counter(const char *s, int i)
 		links++;
 	return (links);
 }
-/*
+
 static int			ft_only_sharps_and_dots(char *s)
 {
 	int		links;
@@ -53,13 +43,7 @@ static int			ft_only_sharps_and_dots(char *s)
 	links = 0;
 	while (s[i])
 	{
-		if (((!(i + 1) % 5) || (!(i + 1) % 21)) && s[i] != '\n')
-		{
-			printf("i = %d \t s[i] = %c\n", );
-			return (1);
-		}
-		else
-			if (s[i] != '.' && s[i] != '#')
+		if (s[i] != '.' && s[i] != '#' && s[i] != '\n')
 				return (1);
 		
 		if (s[i] == '#')
@@ -70,7 +54,7 @@ static int			ft_only_sharps_and_dots(char *s)
 		return (1);
 	return (0);
 }
-*/
+
 static size_t		ft_sharp_counter(const char *s)
 {
 	size_t		c;
@@ -84,6 +68,34 @@ static size_t		ft_sharp_counter(const char *s)
 	return (c);
 }
 
+static int			ft_blackslahes_wrong(const char *s, ssize_t ret)
+{
+	int		i;
+
+	i = -1;
+	if (++i == 0 && s[i] == '\n')
+		return (1);
+	while (++i < 20)
+	{
+		if (!s[i])
+			return (2);
+//		printf("i = %d \t s[i] = %c\n", i, s[i]);
+//		printf("i + 1 modulo 5 = %d \n", ((i + 1) % 5));
+		if ((i +1) % 5)
+		{
+			if (s[i] == '\n')
+				return (3);
+		}
+		else
+			if (s[i] != '\n')
+				return (4);
+	}
+	if (s[i])
+		if (s[i] != '\n')
+			return (5);
+	return (0);
+}
+
 /*
 ** ************************************************************************** **
 */
@@ -92,41 +104,22 @@ int					fillit_is_sample_valid(int fd)
 {
 	char		buffer[BUFF_SIZE + 1];
 	ssize_t		ret;
-	int			i;
-	int			n;
 	int			a;
 
 	while ((ret = read(fd, buffer, BUFF_SIZE)) == 21 || ret == 20)
 	{
 		buffer[ret] = '\0';
-	//	if ((a = ft_only_sharps_and_dots(buffer)))
-	//		return (10);
+		if (ft_only_sharps_and_dots(buffer))
+			return (10);
 		if (ft_sharp_counter(buffer) != 4)
 			return (20);
-		i = 0;
-		if (ret == 21 || ret == 20)
-		{
-			while (buffer[i])
-			{
-				if (ft_strlen_mod(&buffer[i]) == 4)
-				{
-					n = 4;
-					while (n--)
-					{
-						if (ft_strlen_mod(&buffer[i]) == 4
-								&& ft_strlen_mod(&buffer[i + 4]) == 0)
-							i += 5;
-						else
-							return (30 + n);
-					}
-				}
-				else
-					return (40);
-				i++;
-			}
-		}
+		if ((a = ft_blackslahes_wrong(buffer, ret)))
+			return (30 + a);
 	}
 	buffer[ret] = '\0';
+//	printf("ret = %zd\n", ret);
+	if (ret != 20 && ret != 21 && ret != 0)
+		return (1);
 	if (close(fd) == -1)
 		ft_putstr("close error\n");
 	return (0);
