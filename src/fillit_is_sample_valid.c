@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:32:44 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/07 03:26:43 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/07 03:59:11 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,10 @@ static int			ft_blackslahes_wrong(const char *s, ssize_t ret)
 			if (s[i] != '\n')
 				return (4);
 	}
-	if (s[i])
+//	printf("s[20] = %c \t ret = %zd\n",s[20],ret );
+	if (s[20] && ret == 20)
+		return (6);
+	if (s[20])
 		if (s[i] != '\n')
 			return (5);
 	return (0);
@@ -106,7 +109,20 @@ int					fillit_is_sample_valid(int fd)
 	ssize_t		ret;
 	int			a;
 
-	while ((ret = read(fd, buffer, BUFF_SIZE)) == 21 || ret == 20)
+	while ((ret = read(fd, buffer, BUFF_SIZE)) == 21)
+	{
+		buffer[ret] = '\0';
+		if (ft_only_sharps_and_dots(buffer))
+			return (10);
+		if (ft_sharp_counter(buffer) != 4)
+			return (20);
+		if ((a = ft_blackslahes_wrong(buffer, ret)))
+			return (30 + a);
+	}
+//	printf("ret = %zd\n", ret);
+	if (ret == 0)
+		return (1);
+	if (ret == 20)
 	{
 		buffer[ret] = '\0';
 		if (ft_only_sharps_and_dots(buffer))
