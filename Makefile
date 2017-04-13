@@ -6,7 +6,7 @@
 #    By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/12 02:44:46 by amehmeto          #+#    #+#              #
-#    Updated: 2017/04/07 02:05:06 by amehmeto         ###   ########.fr        #
+#    Updated: 2017/04/13 23:40:54 by amehmeto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@
 NAME = fillit
 FILE = main.c \
 	   fillit_is_sample_valid.c \
+	   fillit_checker.c \
 	   fillit_displayer_no_color.c \
 	   fillit_resolver.c \
 	   fillit_encoder.c \

@@ -6,7 +6,7 @@
 /*   By: amehmeto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 22:52:12 by amehmeto          #+#    #+#             */
-/*   Updated: 2017/04/06 22:10:05 by amehmeto         ###   ########.fr       */
+/*   Updated: 2017/04/13 23:36:28 by amehmeto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdio.h>
 
 int		fillit_is_sample_valid(int fd);
+int		fillit_checker(char buffer[22], ssize_t ret);
 void	fillit_encoder(int fd, unsigned long long t[27][4]);
 int		fillit_resolver(unsigned long long t[27][4]);
 int		fillit_displayer(unsigned long long t[27][4], int size, int i);
