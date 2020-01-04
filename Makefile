@@ -22,7 +22,7 @@ FILE = main.c \
 	   fillit_square_vs_tetri.c
 OBJ = $(FILE:.c=.o)
 CC = gcc
-FLAGS = -Wall -Wextra -Weverything 
+FLAGS = -Wall -Wextra 
 
 all: $(NAME)
 
